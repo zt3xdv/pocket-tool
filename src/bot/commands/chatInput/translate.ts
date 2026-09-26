@@ -1,3 +1,4 @@
+/*
 import {
   ApplicationCommandOptionType,
   ApplicationCommandType,
@@ -154,14 +155,20 @@ createApplicationCommand({
       return
     }
 
-    const sourceCode = from === 'auto' ? undefined : from
+    const sourceCode =
+      from && from !== 'auto'
+        ? findClosestMatch(
+            from,
+            DEEPLX_LANGUAGES.map(language => language.code),
+          )
+        : undefined
     const targetCode =
-      to === 'auto'
+      to === 'auto' || !to
         ? (findClosestMatch(
             interaction.locale,
             DEEPLX_LANGUAGES.map(language => language.code),
-          ) ?? 'en')
-        : (to ?? 'en')
+          ) ?? 'en-US')
+        : to
 
     const translation = await makeRequest('https://oneshot-free.www.deepl.com/v1/translate', {
       method: RequestMethod.POST,
@@ -176,7 +183,12 @@ createApplicationCommand({
       },
     })
 
-    const actualSourceCode = sourceCode ?? translation.translations[0].detected_source_language
+    const actualSourceCode =
+      sourceCode ??
+      findClosestMatch(
+        translation.translations[0].detected_source_language,
+        DEEPLX_LANGUAGES.map(language => language.code),
+      )
 
     const sourceLanguage = DEEPLX_LANGUAGES.find(language => language.code === actualSourceCode)
 
@@ -213,3 +225,4 @@ createApplicationCommand({
     })
   },
 })
+*/

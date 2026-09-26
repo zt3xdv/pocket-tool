@@ -1,3 +1,4 @@
+/*
 import {
   ApplicationCommandType,
   ApplicationIntegrationType,
@@ -56,7 +57,7 @@ createApplicationCommand({
       findClosestMatch(
         interaction.locale,
         DEEPLX_LANGUAGES.map(language => language.code),
-      ) ?? 'en'
+      ) ?? 'en-US'
 
     const translation = await makeRequest('https://oneshot-free.www.deepl.com/v1/translate', {
       method: RequestMethod.POST,
@@ -70,7 +71,10 @@ createApplicationCommand({
       },
     })
 
-    const sourceCode = translation.translations[0].detected_source_language
+    const sourceCode = findClosestMatch(
+      translation.translations[0].detected_source_language,
+      DEEPLX_LANGUAGES.map(language => language.code),
+    )
 
     const sourceLanguage = DEEPLX_LANGUAGES.find(language => language.code === sourceCode)
 
@@ -103,3 +107,4 @@ createApplicationCommand({
     })
   },
 })
+*/

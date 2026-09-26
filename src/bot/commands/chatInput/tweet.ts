@@ -147,41 +147,20 @@ createApplicationCommand({
 
     let isTranslated = false
 
+    /*
     if (language && content) {
-      const azureApiKey = env.get('azure_api_key')?.toString()
-
-      if (!azureApiKey) {
-        await client.api.interactions.respond(interaction.application_id, interaction.id, interaction.token, {
-          components: [
-            {
-              type: ComponentType.Container,
-              components: [
-                {
-                  type: ComponentType.TextDisplay,
-                  content: `${emoji('Wrong')} ${t(l, 'commands.tweet.missing_api_key_2')}`,
-                },
-              ],
-            },
-          ],
-          flags: MessageFlags.IsComponentsV2,
-        })
-
-        return
-      }
-
       const sourceCode = tweet.language
         ? findClosestMatch(
             tweet.language,
             DEEPLX_LANGUAGES.map(language => language.code),
           )
         : undefined
-
       const targetCode =
         language === 'auto'
           ? (findClosestMatch(
               interaction.locale,
               DEEPLX_LANGUAGES.map(language => language.code),
-            ) ?? 'en')
+            ) ?? 'en-US')
           : language
 
       const translation = await makeRequest('https://oneshot-free.www.deepl.com/v1/translate', {
@@ -201,6 +180,7 @@ createApplicationCommand({
       isTranslated = !!translated
       content = translated ?? content
     }
+    */
 
     for (const hashtag of tweet.hashtags) {
       const escaped = hashtag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
